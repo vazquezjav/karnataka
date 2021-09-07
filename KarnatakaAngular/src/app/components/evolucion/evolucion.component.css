@@ -1,7 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
 nz-header{
     padding: 0;
     width: 100%;
     z-index: 2;
+    height: 150px;
+    font-size: 10px;
+
+}
+.title_types{
+    color: black;
+    font-style: oblique;
+   
 }
 
 .app-header{
@@ -23,10 +33,6 @@ nz-header{
 .trigger:hover {
     color: #1890ff;
   }
-
-  nz-content {
-    margin: 24px;
-  }
   
   .inner-content {
     padding: 24px;
@@ -38,3 +44,22 @@ nz-header{
       color: #fff;
       line-height: 120px;
   }
+  nz-header{
+      background:white ;
+      font-size: 15px;
+  }
+  nz-content{
+    background: #d28585;
+    color: #fff;
+    min-height: 120px;
+    line-height: 120px;
+  }
+
+  a{
+      color: black;
+  }
+
+  nz-card{
+      border-radius: 30px;
+  }
+  

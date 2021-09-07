@@ -7,7 +7,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
@@ -18,7 +18,13 @@ import { ConsolidadoComponent } from './components/consolidado/consolidado.compo
 import { CondensacionVentasComponent } from './components/condensacion-ventas/condensacion-ventas.component';
 
 import { NzGridModule } from 'ng-zorro-antd/grid';
-
+import { NgApexchartsModule } from "ng-apexcharts";
+import { NzDropDownModule } from "ng-zorro-antd/dropdown"
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import {NzCardModule} from 'ng-zorro-antd/card'
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 registerLocaleData(en);
 
 @NgModule({
@@ -27,7 +33,7 @@ registerLocaleData(en);
     EvolucionComponent,
     ConsolidadoComponent,
     CondensacionVentasComponent,
-    
+
   ],
   imports: [
     BrowserModule,
@@ -36,9 +42,23 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     IconsProviderModule,
+    ReactiveFormsModule,
+
+    // Import Modules NG-ZORRO
     NzLayoutModule,
     NzMenuModule,
-   NzGridModule
+    NzGridModule,
+    NzDropDownModule,
+    NzRadioModule,
+    NzCardModule,
+    NzAvatarModule,
+    NzButtonModule,
+    NzSpaceModule,
+    
+
+    // Import Modules NG-APEXCHARTS
+    NgApexchartsModule
+
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
