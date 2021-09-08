@@ -19,11 +19,6 @@ export class ConsolidadoComponent implements OnInit {
   radioValue = "Acumulado";
   radioValueUnits = "Millones";
 
-  // lists
-  listCompanies: string[] = []
-  listMonths: string[] = []
-  listYears: number[] = []
-
   // **** LABELS CARDS ***
   lblCLastYear="";
   lblCSelectYear ="";
@@ -38,6 +33,33 @@ export class ConsolidadoComponent implements OnInit {
   lblBPorcentLast = ""
   lblBPorcentSelect = "";
   
+  // Spend Operation 
+  lblSOLast = "";
+  lblSOSelect = "";
+  lblSOPorcentLast = "";
+  lblSOPorcentSelect = "";
+
+  // Margin Operation 
+  lblMOLast = "";
+  lblMOSelect = "";
+  lblMOPorcentLast = "";
+  lblMOPorcentSelect = "";
+
+  // Spend No Operation 
+  lblNOLast = "";
+  lblNOSelect = "";
+  lblNOPorcentLast = "";
+  lblNOPorcentSelect = "";
+
+  // Margin Neto
+  lblMNLast = "";
+  lblMNSelect = "";
+  lblMNPorcentLast = "";
+  lblMNPorcentSelect = "";
+
+  // EBITDA
+  lblELast = "";
+  lblESelect = "";
 
   // labels value datas colors 
   valueSales=0;
@@ -48,7 +70,13 @@ export class ConsolidadoComponent implements OnInit {
   valueMarginNeto=0;
   valueEBITDA=0;
 
+
   visible=false;
+
+  // lists
+  listCompanies: string[] = []
+  listMonths: string[] = []
+  listYears: number[] = []
 
   constructor() {
     
@@ -621,16 +649,11 @@ export class ConsolidadoComponent implements OnInit {
     this.graphMarginNeto([44, 55, 57, 56, 61, 58, 63, 60, 66])
     this.graphEBITDA([44, 55, 57, 56, 61, 58, 63, 60, 66])
     
-    this.updateValues();
-    this.updateLabelCards();
+    
+    this.updateValueCards();
   }
 
-  updateValues(){
-    this.valueSales=-1;
-    this.valueEBITDA=-25;
-  }
-
-  updateLabelCards(){
+  updateValueCards(){
     this.lblCSelectYear = this.lblYear;
     this.lblCLastYear = String(Number(this.lblYear)-1);
 
@@ -644,7 +667,38 @@ export class ConsolidadoComponent implements OnInit {
      this.lblBPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
      this.lblBPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
 
-     // Margin Operation
+     // Spend Operation
+     this.lblSOLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblSOSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblSOPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     this.lblSOPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
+
+     // Margin Operation 
+     this.lblMOLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblMOSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblMOPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     this.lblMOPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
+
+     // Spend No Operation 
+     this.lblNOLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblNOSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblNOPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     this.lblNOPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     
+     // Margin Neto
+     this.lblMNLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblMNSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblMNPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     this.lblMNPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
+
+     // EBITDA
+     this.lblELast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblESelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+
+     // update values 
+     this.valueSales=-1;
+    this.valueEBITDA=-25;
+     
   }
 
   // methods update Labels with choice parameters of dropdown 

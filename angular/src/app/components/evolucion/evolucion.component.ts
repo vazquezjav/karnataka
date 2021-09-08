@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ApexCharts from "apexcharts";
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-evolucion',
@@ -11,6 +12,7 @@ export class EvolucionComponent implements OnInit {
   isCollapsed = false;
   loading = false;
   first = true;
+  visible = false;
 
   // Labels
   lblYear = "Seleccione";
@@ -42,8 +44,11 @@ export class EvolucionComponent implements OnInit {
   listCompanies: string[] = []
   listMonths: string[] = []
   listYears: number[] = []
+  listClusters: string[] = [];
 
-  constructor() {
+  constructor( 
+    private notify: NzNotificationService
+  ) {
 
   }
 
@@ -57,6 +62,7 @@ export class EvolucionComponent implements OnInit {
     this.listCompanies = ['El juri', 'UPS', 'Coral']
     this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
     this.listYears = [2018, 2019, 2020, 2021]
+    this.listClusters = ['Cluster', 'Todos']
   }
 
   graphSales(last_year: number[], present_year: number[], pptoVNE: number[]) {
@@ -391,8 +397,9 @@ export class EvolucionComponent implements OnInit {
 
   }
   updateGraphs() {
-    console.log(this.lblYear + " " + this.lblMonth + " " + this.lblCompany + " " + this.radioValue + " " + this.radioValueUnits)
+    //console.log(this.lblYear + " " + this.lblMonth + " " + this.lblCompany + " " + this.radioValue + " " + this.radioValueUnits)
 
+    this.visible = true;
     const randomArray =[]
     for(let i = 0; i<9; i++) {randomArray.push(Math.floor(Math.random() * 100) + 1)}
     
@@ -412,6 +419,7 @@ export class EvolucionComponent implements OnInit {
 
     this.graphOperation([44, 55, 57, 56, 61, 58, 63, 60, 66])
 
+    this.createNotify();
     this.first = false;
 
   }
@@ -434,6 +442,13 @@ export class EvolucionComponent implements OnInit {
     this.lblOPorcentSelect = String(Math.floor(Math.random() * 100) + 1) + "%"
     this.lblOPorcentLast = String(Math.floor(Math.random() * 100) + 1) + "%"
 
+  }
+  createNotify(){
+    this.notify.blank(
+      'Parametros seleccionados',
+      'Anio: '+ this.lblYear+'\n Mes: '+this.lblMonth+'\n Empresa: '+this.lblCompany
+    ).onClick.subscribe(()=>{
+    })
   }
 
   // methods update Labels with choice parameters of dropdown 

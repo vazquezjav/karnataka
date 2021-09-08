@@ -28,7 +28,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzTableModule } from 'ng-zorro-antd/table';
-
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 registerLocaleData(en);
 
@@ -58,7 +58,8 @@ registerLocaleData(en);
     NzAvatarModule,
     NzButtonModule,
     NzSpaceModule,
-    //NzTableModule,
+    NzTableModule,
+    NzNotificationModule,
 
     // Import Modules NG-APEXCHARTS
     NgApexchartsModule
