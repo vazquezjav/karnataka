@@ -31,7 +31,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="year">
-                        {{labelYear}}
+                        {{lblYear}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #year="nzDropdownMenu">
@@ -46,7 +46,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="month">
-                        {{labelMonth}}
+                        {{lblMonth}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #month="nzDropdownMenu">
@@ -64,7 +64,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="company">
-                        {{labelCompany}}
+                        {{lblCompany}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #company="nzDropdownMenu">
@@ -104,19 +104,19 @@
         <div nz-col class="gutter-row" [nzSpan]="8"><div class="inner-box">
             <nz-card  nzTitle="Ventas" style="width: 380px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2020</div>
+                    <div nz-col class="gutter-row" [nzSpan]="10">
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">11 Millones</div>
+                    <div nz-col class="gutter-row" [nzSpan]="10">
+                        <div class="inner-box title_types">{{lblSLast}}</div>
                     </div>
                 </div>
                 <div nz-row [nzGutter]="8">
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2021</div>
+                    <div nz-col class="gutter-row" [nzSpan]="10">
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">16 Millones</div>
+                    <div nz-col class="gutter-row" [nzSpan]="10">
+                        <div class="inner-box title_types">{{lblSSelect}}</div>
                     </div>
                 </div>
                 <h1 class="float-right" [ngStyle]="valueSales >=0?{color:'green'}:{color:'red'}">{{valueSales }}</h1>
@@ -128,19 +128,25 @@
         <div nz-col class="gutter-row" [nzSpan]="8"><div class="inner-box">
             <nz-card  nzTitle="Margen Bruto" style="width: 380px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2020</div>
+                    <div nz-col class="gutter-row" [nzSpan]="8">
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
-                    <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">12 Millones</div>
+                    <div nz-col class="gutter-row" [nzSpan]="8">
+                        <div class="inner-box title_types">{{lblBLast}}</div>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="8">
+                        <div class="inner-box title_types">{{lblBPorcentLast}}</div>
                     </div>
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2021</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">13 Millones</div>
+                        <div class="inner-box title_types">{{lblBSelect}}</div>
+                    </div>
+                    <div nz-col class="gutter-row" [nzSpan]="6">
+                        <div class="inner-box title_types">{{lblBPorcentSelect}}</div>
                     </div>
                 </div>
                 <h1 class="float-right" [ngStyle]="valueMarginBruto >=0?{color:'green'}:{color:'red'}">{{valueMarginBruto +' %'}}</h1>
@@ -151,7 +157,7 @@
             <nz-card  nzTitle="Gastos Operacionales" style="width: 380px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2020</div>
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">1 Millones</div>
@@ -159,7 +165,7 @@
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2021</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">11 Millones</div>
@@ -173,7 +179,7 @@
             <nz-card  nzTitle="Margen Operacional" style="width: 380px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2020</div>
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">2 Millones</div>
@@ -181,7 +187,7 @@
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2021</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">9 Millones</div>
@@ -195,7 +201,7 @@
             <nz-card  nzTitle="Gastos No Operacionales" style="width: 380px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2020</div>
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">22 Millones</div>
@@ -203,7 +209,7 @@
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">2021</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
                         <div class="inner-box title_types">92 Millones</div>
@@ -218,7 +224,7 @@
                 <nz-card  nzTitle="Margen Neto" style="width: 380px; height: 400px; text-align: center;">
                     <div nz-row [nzGutter]="8">
                         <div nz-col class="gutter-row" [nzSpan]="6">
-                            <div class="inner-box title_types">2020</div>
+                            <div class="inner-box title_types">{{lblCLastYear}}</div>
                         </div>
                         <div nz-col class="gutter-row" [nzSpan]="6">
                             <div class="inner-box title_types">44 Millones</div>
@@ -226,7 +232,7 @@
                     </div>
                     <div nz-row [nzGutter]="8">
                         <div nz-col class="gutter-row" [nzSpan]="6">
-                            <div class="inner-box title_types">2021</div>
+                            <div class="inner-box title_types">{{lblCSelectYear}}</div>
                         </div>
                         <div nz-col class="gutter-row" [nzSpan]="6">
                             <div class="inner-box title_types">45 Millones</div>
@@ -243,7 +249,7 @@
                     <nz-card  nzTitle="EBITDA" style="width: 380px; height: 400px; text-align: center;">
                         <div nz-row [nzGutter]="8">
                             <div nz-col class="gutter-row" [nzSpan]="6">
-                                <div class="inner-box title_types">2020</div>
+                                <div class="inner-box title_types">{{lblCLastYear}}</div>
                             </div>
                             <div nz-col class="gutter-row" [nzSpan]="6">
                                 <div class="inner-box title_types">2 Millones</div>
@@ -251,7 +257,7 @@
                         </div>
                         <div nz-row [nzGutter]="8">
                             <div nz-col class="gutter-row" [nzSpan]="6">
-                                <div class="inner-box title_types">2021</div>
+                                <div class="inner-box title_types">{{lblCSelectYear}}</div>
                             </div>
                             <div nz-col class="gutter-row" [nzSpan]="6">
                                 <div class="inner-box title_types">2 Millones</div>

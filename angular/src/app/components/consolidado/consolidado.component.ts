@@ -10,10 +10,10 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 export class ConsolidadoComponent implements OnInit {
 
   // Labels
-  labelYear = "Seleccione";
-  labelMonth = "Todos";
-  labelCluster= "Todos";
-  labelCompany = "Seleccione";
+  lblYear = "Seleccione";
+  lblMonth = "Todos";
+  lblCluster= "Todos";
+  lblCompany = "Seleccione";
 
   // radio values
   radioValue = "Acumulado";
@@ -24,6 +24,21 @@ export class ConsolidadoComponent implements OnInit {
   listMonths: string[] = []
   listYears: number[] = []
 
+  // **** LABELS CARDS ***
+  lblCLastYear="";
+  lblCSelectYear ="";
+
+  // Sales
+  lblSLast = "";
+  lblSSelect = "";
+
+  // Margin Bruto
+  lblBLast = ""
+  lblBSelect = "";
+  lblBPorcentLast = ""
+  lblBPorcentSelect = "";
+  
+
   // labels value datas colors 
   valueSales=0;
   valueMarginBruto=0;
@@ -32,7 +47,6 @@ export class ConsolidadoComponent implements OnInit {
   valueSpendNOperation=0;
   valueMarginNeto=0;
   valueEBITDA=0;
-
 
   visible=false;
 
@@ -608,6 +622,7 @@ export class ConsolidadoComponent implements OnInit {
     this.graphEBITDA([44, 55, 57, 56, 61, 58, 63, 60, 66])
     
     this.updateValues();
+    this.updateLabelCards();
   }
 
   updateValues(){
@@ -615,21 +630,38 @@ export class ConsolidadoComponent implements OnInit {
     this.valueEBITDA=-25;
   }
 
+  updateLabelCards(){
+    this.lblCSelectYear = this.lblYear;
+    this.lblCLastYear = String(Number(this.lblYear)-1);
+
+    // Sales 
+     this.lblSLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblSSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+
+     // Margin Bruto 
+     this.lblBLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblBSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+     this.lblBPorcentLast = String(Math.floor(Math.random() * 1000) + 1) + "%";
+     this.lblBPorcentSelect = String(Math.floor(Math.random() * 1000) + 1) + "%";
+
+     // Margin Operation
+  }
+
   // methods update Labels with choice parameters of dropdown 
   updateLabelYear(data: number): void {
-    this.labelYear = data.toString();
+    this.lblYear = data.toString();
   }
 
   updateLabelMonth(data: string): void {
-    this.labelMonth = data;
+    this.lblMonth = data;
   }
 
   updateLabelCluster(data: string): void {
-    this.labelCluster = data;
+    this.lblCluster = data;
   }
 
   updateLabelCompany(data: string): void {
-    this.labelCompany = data;
+    this.lblCompany = data;
   }
 
 }

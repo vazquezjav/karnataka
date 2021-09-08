@@ -8,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class CondensacionVentasComponent implements OnInit {
 
   // labels 
-  labelYear = "Seleccione";
-  labelMonth = "Todos"
-  labelDistribution = "Todas"
-  labelCluster = "Todas"
-  labelCompany = "Seleccione"
+  lblYear = "Seleccione";
+  lblMonth = "Todos"
+  lblDistribution = "Todas"
+  lblCluster = "Todas"
+  lblCompany = "Seleccione"
 
   // lists 
   listYears: number[] = [];
@@ -46,7 +46,7 @@ export class CondensacionVentasComponent implements OnInit {
     this.graphParticipacionUnit([25, 45, 68, 95, 74]);
     this.graphParticipationDistri([]);
     this.graphLocations([]);
-    //this.graphEvolution();
+    this.graphEvolution([44, 55, 57, 56, 61, 58, 63, 80,100,15,12,16],[44, 55, 57, 56, 61, 58, 63, 80,100,87,98,74]);
   }
 
   graphParticipacionUnit(data: number[]) {
@@ -222,11 +222,13 @@ export class CondensacionVentasComponent implements OnInit {
         width: 650
       },
       plotOptions: {
-        horizontal: false,
-        columnWidth: '55%',
-        endinShape: 'rounded',
-        dataLabels: {
-          position: 'top'
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endinShape: 'rounded',
+          dataLabels: {
+            position: 'top'
+          }
         }
       },
       dataLabels: {
@@ -261,13 +263,13 @@ export class CondensacionVentasComponent implements OnInit {
       },
       legend: {
         show: true,
-        position: top
+        position: 'top'
       },
       tooltip: {
         y: {
-          formatter: function(val:any){
-            return "$" + val
-          },
+          formatter: function (val: any) {
+            return "$ " + val 
+          }
         }
       }, 
       title:{
@@ -284,22 +286,22 @@ export class CondensacionVentasComponent implements OnInit {
 
   // methods update Labels with choice parameters of dropdown 
   updateLabelYear(data: number): void {
-    this.labelYear = data.toString();
+    this.lblYear = data.toString();
   }
 
   updateLabelMonth(data: string): void {
-    this.labelMonth = data;
+    this.lblMonth = data;
   }
 
   updateLabelCluster(data: string): void {
-    this.labelCluster = data;
+    this.lblCluster = data;
   }
 
   updateLabelCompany(data: string): void {
-    this.labelCompany = data;
+    this.lblCompany = data;
   }
   updateLabelDistribution(data: string): void {
-    this.labelDistribution = data;
+    this.lblDistribution = data;
   }
 
 }

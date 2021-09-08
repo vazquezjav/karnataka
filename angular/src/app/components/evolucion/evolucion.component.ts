@@ -13,18 +13,26 @@ export class EvolucionComponent implements OnInit {
   first = true;
 
   // Labels
-  labelYear = "Seleccione";
-  labelMonth= "Todos";
-  labelCluster = "Todos";
-  labelCompany = "Seleccione";
-  
-  // Labels cards 
-  labelCardLastYear = "";
-  labelCardPresentYear = "";
-  labelBrutoLast = "";
-  labelBrutoPresent = "";
-  labelBrutoPorcentLast = "";
-  labelBrutoPorcentPresent = "";
+  lblYear = "Seleccione";
+  lblMonth = "Todos";
+  lblCluster = "Todos";
+  lblCompany = "Seleccione";
+
+  // *** LABELS CARDS ***
+  lblCLastYear = "";
+  lblCSelectYear = "";
+
+  // Margin Burto
+  lblBLast = "";
+  lblBSelect = "";
+  lblBPorcentLast = "";
+  lblBPorcentSelect = "";
+
+  // Margin Operation
+  lblOLast = "";
+  lblOSelect = "";
+  lblOPorcentLast = "";
+  lblOPorcentSelect = "";
 
   // radio values
   radioValue = "Acumulado";
@@ -41,7 +49,7 @@ export class EvolucionComponent implements OnInit {
 
   ngOnInit(): void {
     this.fillLists();
-    
+
   }
 
   // method fill all lists
@@ -51,7 +59,7 @@ export class EvolucionComponent implements OnInit {
     this.listYears = [2018, 2019, 2020, 2021]
   }
 
-  graphSales(last_year:number[], present_year:number[], pptoVNE:number[]) {
+  graphSales(last_year: number[], present_year: number[], pptoVNE: number[]) {
     var options = {
       series: [{
         name: 'Ventas Anio Anterior',
@@ -64,7 +72,7 @@ export class EvolucionComponent implements OnInit {
         data: pptoVNE
       }],
       chart: {
-        id:'sales',
+        id: 'sales',
         type: 'bar',
         height: 350,
         width: 750
@@ -75,7 +83,7 @@ export class EvolucionComponent implements OnInit {
           columnWidth: '55%',
           endingShape: 'rounded',
           dataLabels: {
-            position: 'top', // top, center, bottom
+            position: 'top',
           },
         },
       },
@@ -109,7 +117,6 @@ export class EvolucionComponent implements OnInit {
       legend: {
         show: true,
         position: 'top'
-
       },
       tooltip: {
         y: {
@@ -118,8 +125,8 @@ export class EvolucionComponent implements OnInit {
           }
         }
       },
-      title:{
-        text:  this.labelYear,
+      title: {
+        text: 'Anio ' + this.lblYear,
         align: 'center',
         floating: false,
         position: 'top'
@@ -128,15 +135,20 @@ export class EvolucionComponent implements OnInit {
 
     var chart = new ApexCharts(document.querySelector("#chart_sales"), options);
 
-    if (this.first){
+    if (this.first) {
       chart.render();
-    }else{
-      
+    } else {
+      chart.render();
+      chart.updateOptions({
+        title: {
+          text: 'Anio ' + this.lblYear
+        }
+      })
     }
-    
+
   }
 
-  graphSpend(last_year:number[], present_year:number[], pptoGOP:number[]) {
+  graphSpend(last_year: number[], present_year: number[], pptoGOP: number[]) {
     var options = {
       series: [{
         name: 'Gastos Anio Anterior',
@@ -201,14 +213,31 @@ export class EvolucionComponent implements OnInit {
             return "$ " + val + " Dolares"
           }
         }
+      },
+      title: {
+        text: 'Anio ' + this.lblYear,
+        align: 'center',
+        floating: false,
+        position: 'top'
       }
     };
 
     var chart = new ApexCharts(document.querySelector("#chart_spend"), options);
-    chart.render();
+
+
+    if (this.first) {
+      chart.render();
+    } else {
+      chart.render();
+      chart.updateOptions({
+        title: {
+          text: 'Anio ' + this.lblYear
+        }
+      })
+    }
   }
 
-  graphMargin(last_year:number[]) {
+  graphMargin(last_year: number[]) {
     var options = {
       series: [{
         name: 'Gastos Anio Anterior',
@@ -216,6 +245,7 @@ export class EvolucionComponent implements OnInit {
       },
       ],
       chart: {
+        id: 'chart_margin',
         type: 'bar',
         height: 200,
         width: 350
@@ -272,10 +302,19 @@ export class EvolucionComponent implements OnInit {
     };
 
     var chart = new ApexCharts(document.querySelector("#chart_margin"), options);
-    chart.render();
+
+    if (this.first) {
+      chart.render();
+    } else {
+      chart.render();
+      chart.updateSeries([{
+        name: 'Nueva actualizacion',
+        data: [50, 10, 25, 10, 10, 100, 50, 41, 66]
+      }])
+    }
   }
 
-  graphOperation(year:number[]){
+  graphOperation(year: number[]) {
     var options = {
       series: [{
         name: 'Gastos Anio Anterior',
@@ -339,55 +378,80 @@ export class EvolucionComponent implements OnInit {
     };
 
     var chart = new ApexCharts(document.querySelector("#chart_operation"), options);
-    chart.render();
+
+    if (this.first) {
+      chart.render();
+    } else {
+      chart.render();
+      chart.updateSeries([{
+        name: 'Actualizacion',
+        data: [50, 10, 25, 10, 10, 100, 50, 41, 66]
+      }])
+    }
 
   }
-  updateGraphs(){
-    console.log(this.labelYear+" "+ this.labelMonth+ " "+this.labelCompany+" "+ this.radioValue+" "+this.radioValueUnits)
+  updateGraphs() {
+    console.log(this.lblYear + " " + this.lblMonth + " " + this.lblCompany + " " + this.radioValue + " " + this.radioValueUnits)
 
-    this.graphSales([44, 55, 57, 56, 61, 58, 63, 60, 66], [76, 85, 101, 98, 87, 105, 91, 114, 94], [35, 41, 36, 26, 45, 48, 52, 53, 41])
-    this.graphSpend([44, 55, 57, 56, 61, 58, 63, 80,100], [76, 85, 101, 98, 87, 105, 91, 114, 94], [35, 41, 36, 26, 45, 48, 52, 53, 41])
+    const randomArray =[]
+    for(let i = 0; i<9; i++) {randomArray.push(Math.floor(Math.random() * 100) + 1)}
+    
+    const s_lastYear = []
+    const s_selectYear = []
+    const s_ppto = []
+    for(let i = 0; i<9; i++) {s_lastYear.push(Math.floor(Math.random() * 100) + 1)}
+    for(let i = 0; i<9; i++) {s_selectYear.push(Math.floor(Math.random() * 100) + 1)}
+    for(let i = 0; i<9; i++) {s_ppto.push(Math.floor(Math.random() * 100) + 1)}
+
+    this.graphSales(s_lastYear, s_selectYear, s_ppto)
+    this.graphSpend([44, 55, 57, 56, 61, 58, 63, 80, 100], [76, 85, 101, 98, 87, 105, 91, 114, 94], [35, 41, 36, 26, 45, 48, 52, 53, 41])
 
     this.updateDataCard();
-    
+
     this.graphMargin([44, 55, 57, 56, 61, 58, 63, 60, 66])
 
     this.graphOperation([44, 55, 57, 56, 61, 58, 63, 60, 66])
-    
+
     this.first = false;
 
   }
 
-  updateDataCard(){
+  updateDataCard() {
     this.loading = true;
-    this.labelCardLastYear=String(Number(this.labelYear)-1);
-    this.labelCardPresentYear = this.labelYear;
+    this.lblCLastYear = String(Number(this.lblYear) - 1);
+    this.lblCSelectYear = this.lblYear;
 
-    this.labelBrutoPresent="15 millones"
-    this.labelBrutoLast="12 millones"
+    // margin bruto
+    this.lblBSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+    this.lblBLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+    this.lblBPorcentSelect = String(Math.floor(Math.random() * 100) + 1) + "%"
+    this.lblBPorcentLast = String(Math.floor(Math.random() * 100) + 1) + "%"
 
-    this.labelBrutoPorcentPresent="Prese %"
-    this.labelBrutoPorcentLast="Past %"
 
-    
+    // margin operation 
+    this.lblOSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+    this.lblOLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
+    this.lblOPorcentSelect = String(Math.floor(Math.random() * 100) + 1) + "%"
+    this.lblOPorcentLast = String(Math.floor(Math.random() * 100) + 1) + "%"
+
   }
 
   // methods update Labels with choice parameters of dropdown 
   updateLabelYear(data: number): void {
-    console.log("Anio "+data)
-    this.labelYear = data.toString();
+    console.log("Anio " + data)
+    this.lblYear = data.toString();
   }
 
   updateLabelMonth(data: string): void {
-    this.labelMonth = data;
+    this.lblMonth = data;
   }
 
   updateLabelCluster(data: string): void {
-    this.labelCluster = data;
+    this.lblCluster = data;
   }
 
   updateLabelCompany(data: string): void {
-    this.labelCompany = data;
+    this.lblCompany = data;
   }
 
 }

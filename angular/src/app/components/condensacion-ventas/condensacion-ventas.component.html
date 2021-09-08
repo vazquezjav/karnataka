@@ -32,7 +32,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="year">
-                        {{labelYear}}
+                        {{lblYear}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #year="nzDropdownMenu">
@@ -47,7 +47,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="month">
-                        {{labelMonth}}
+                        {{lblMonth}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #month="nzDropdownMenu">
@@ -62,7 +62,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="distribution">
-                        {{labelDistribution}}
+                        {{lblDistribution}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #distribution="nzDropdownMenu">
@@ -79,7 +79,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="cluster">
-                        {{labelCluster}}
+                        {{lblCluster}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #cluster="nzDropdownMenu">
@@ -95,7 +95,7 @@
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="company">
-                        {{labelCompany}}
+                        {{lblCompany}}
                         <i nz-icon nzType="down"></i>
                     </a>
                     <nz-dropdown-menu #company="nzDropdownMenu">
@@ -139,16 +139,43 @@
 
         <div nz-row [nzGutter]="[16, 24]" [style.visibility]="(visible == false) ? 'hidden' : 'visible' ">
             <div nz-col class="gutter-row" [nzSpan]="10">
-                tabla
+                preee
             </div>
 
             <div nz-col class="gutter-row" [nzSpan]="10">
-                grafico
-
+                <div id="chart_evolution"></div>
             </div>
         </div>
 
-        <div id="chart_evolution"></div>
+       <!-- <nz-table [nzData]="listOfData" nzBordered nzSize="middle" >
+            <thead>
+                <tr>
+                    <th> Anio</th>
+                    <th colspan="2">2020</th>
+                    <th colspan="2"> 2021</th>
+                    <th >Vac</th>
+                </tr>
+                <tr>
+                    <th>Mes</th>
+                    <th>$</th>
+                    <th>%</th>
+                    <th>$</th>
+                    <th>%</th>
+                    <th>% Var</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Hola</td>
+                    <td> Hola</td>
+                    <td> Hola</td>
+                    <td> Hola</td>
+                    <td> Hola</td>
+                    <td> Hola</td>
+                </tr>
+            </tbody>
+        </nz-table> -->
+
         
     </div>
 </body> 

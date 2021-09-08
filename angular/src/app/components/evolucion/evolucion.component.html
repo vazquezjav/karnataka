@@ -33,7 +33,7 @@
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <a nz-dropdown [nzDropdownMenu]="year">
-                    {{labelYear}}
+                    {{lblYear}}
                     <i nz-icon nzType="down"></i>
                 </a>
                 <nz-dropdown-menu #year="nzDropdownMenu">
@@ -48,12 +48,12 @@
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <a nz-dropdown [nzDropdownMenu]="month">
-                    {{labelMonth}}
+                    {{lblMonth}}
                     <i nz-icon nzType="down"></i>
                 </a>
                 <nz-dropdown-menu #month="nzDropdownMenu">
                     <ul nz-menu>
-                        <li nz-menu-item *ngFor="let month of listMonths" (change)="updateLabelMonth(month)">
+                        <li nz-menu-item *ngFor="let month of listMonths" (click)="updateLabelMonth(month)">
                             {{month}}</li>
                     </ul>
                 </nz-dropdown-menu>
@@ -66,7 +66,7 @@
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <a nz-dropdown [nzDropdownMenu]="company">
-                    {{labelCompany}}
+                    {{lblCompany}}
                     <i nz-icon nzType="down"></i>
                 </a>
                 <nz-dropdown-menu #company="nzDropdownMenu">
@@ -109,24 +109,24 @@
             <nz-card *nzSpaceItem nzTitle="Margen Bruto" style="width: 400px; height: 400px; text-align: center;">
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelCardLastYear}}</div>
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoLast}}</div>
+                        <div class="inner-box title_types">{{lblBLast}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPorcentLast}}</div>
+                        <div class="inner-box title_types">{{lblBPorcentLast}}</div>
                     </div>
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelCardPresentYear}}</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPresent}}</div>
+                        <div class="inner-box title_types">{{lblBSelect}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPorcentPresent}}</div>
+                        <div class="inner-box title_types">{{lblBPorcentSelect}}</div>
                     </div>
                 </div>
                 <div id="chart_margin">
@@ -136,24 +136,24 @@
             <nz-card *nzSpaceItem nzTitle="Margen Operacional" style="width: 400px; height: 400px;text-align: center;">
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelCardLastYear}}</div>
+                        <div class="inner-box title_types">{{lblCLastYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoLast}}</div>
+                        <div class="inner-box title_types">{{lblOLast}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPorcentLast}}</div>
+                        <div class="inner-box title_types">{{lblOPorcentLast}}</div>
                     </div>
                 </div>
                 <div nz-row [nzGutter]="8">
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelCardPresentYear}}</div>
+                        <div class="inner-box title_types">{{lblCSelectYear}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPresent}}</div>
+                        <div class="inner-box title_types">{{lblOSelect}}</div>
                     </div>
                     <div nz-col class="gutter-row" [nzSpan]="6">
-                        <div class="inner-box title_types">{{labelBrutoPorcentPresent}}</div>
+                        <div class="inner-box title_types">{{lblOPorcentSelect}}</div>
                     </div>
                 </div>
 
