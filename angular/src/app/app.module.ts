@@ -13,9 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+
 import { EvolucionComponent } from './components/evolucion/evolucion.component';
-import { ConsolidadoComponent } from './components/consolidado/consolidado.component';
 import { CondensacionVentasComponent } from './components/condensacion-ventas/condensacion-ventas.component';
+import { ConsolidadoComponent } from './components/consolidado/consolidado.component';
+
 
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NgApexchartsModule } from "ng-apexcharts";
@@ -25,8 +27,8 @@ import {NzCardModule} from 'ng-zorro-antd/card'
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
-//import { NzTableModule } from 'ng-zorro-antd/table';
 
 registerLocaleData(en);
 
@@ -34,9 +36,8 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     EvolucionComponent,
-    ConsolidadoComponent,
     CondensacionVentasComponent,
-
+    ConsolidadoComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +62,6 @@ registerLocaleData(en);
 
     // Import Modules NG-APEXCHARTS
     NgApexchartsModule
-
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
