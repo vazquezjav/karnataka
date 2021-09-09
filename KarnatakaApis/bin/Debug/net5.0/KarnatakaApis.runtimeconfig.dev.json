@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\vazqu\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\vazqu\\.nuget\\packages"
+    ]
+  }
+}

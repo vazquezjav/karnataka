@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ApexCharts from "apexcharts";
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { DataServiceService } from 'src/app/services/data-service.service';
 
 @Component({
   selector: 'app-evolucion',
@@ -47,7 +48,8 @@ export class EvolucionComponent implements OnInit {
   listClusters: string[] = [];
 
   constructor( 
-    private notify: NzNotificationService
+    private notify: NzNotificationService,
+    private dataService: DataServiceService,
   ) {
 
   }
@@ -420,8 +422,19 @@ export class EvolucionComponent implements OnInit {
     this.graphOperation([44, 55, 57, 56, 61, 58, 63, 60, 66])
 
     this.createNotify();
+    this.consumeService();
     this.first = false;
 
+  }
+
+  consumeService(){
+    this.dataService.getDataBalance().subscribe(data =>{
+      console.log(data," \n")
+    });
+
+    this.dataService.getDataIndicatorV().subscribe(data =>{
+      console.log(data)
+    })
   }
 
   updateDataCard() {
