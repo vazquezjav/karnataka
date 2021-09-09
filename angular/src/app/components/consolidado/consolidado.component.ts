@@ -77,6 +77,7 @@ export class ConsolidadoComponent implements OnInit {
   listCompanies: string[] = []
   listMonths: string[] = []
   listYears: number[] = []
+  listClusters: string[]=[]
 
   constructor() {
     
@@ -87,9 +88,10 @@ export class ConsolidadoComponent implements OnInit {
   }
 
   fillLists() {
-    this.listCompanies = ['El juri', 'UPS', 'Coral']
-    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-    this.listYears = [2018, 2019, 2020, 2021]
+    this.listCompanies = ['El juri', 'UPS', 'Coral'];
+    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre','Todos'];
+    this.listYears = [2018, 2019, 2020, 2021];
+    this.listClusters = ['Cluster 1', 'Cluster 2'];
   }
 
   // method graphs diferents charts

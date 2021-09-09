@@ -61,8 +61,8 @@ export class EvolucionComponent implements OnInit {
 
   // method fill all lists
   fillLists() {
-    this.listCompanies = ['El juri', 'UPS', 'Coral']
-    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    this.listCompanies = ['Indian Motos Inmot S.A.', 'Karnataka S.A.', 'Metrokia S.A.']
+    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre','Todos']
     this.listYears = [2018, 2019, 2020, 2021]
     this.listClusters = ['Cluster', 'Todos']
   }
@@ -423,12 +423,17 @@ export class EvolucionComponent implements OnInit {
 
     this.createNotify();
     this.consumeService();
+    
     this.first = false;
 
   }
 
   consumeService(){
-    this.dataService.getDataBalance().subscribe(data =>{
+    // validate data 
+
+    var months:any={"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12, "Todos":13}
+    
+    this.dataService.getDataBalance(Number(this.lblYear), months[this.lblMonth], this.lblCompany).subscribe(data =>{
       console.log(data," \n")
     });
 
@@ -481,5 +486,4 @@ export class EvolucionComponent implements OnInit {
   updateLabelCompany(data: string): void {
     this.lblCompany = data;
   }
-
 }

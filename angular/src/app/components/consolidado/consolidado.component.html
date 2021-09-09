@@ -59,8 +59,20 @@
                 </div>
             </div>
             <div nz-col class="gutter-row" [nzSpan]="4">
-                <div class="inner-box">Cluster</div>
+                <div class="inner-box">
+                    <a nz-dropdown [nzDropdownMenu]="cluster">
+                        {{lblCluster}}
+                        <i nz-icon nzType="down"></i>
+                    </a>
+                    <nz-dropdown-menu #cluster="nzDropdownMenu">
+                        <ul nz-menu>
+                            <li nz-menu-item *ngFor="let cluster of listClusters" (click)="updateLabelCluster(cluster)">
+                                {{cluster}}</li>
+                        </ul>
+                    </nz-dropdown-menu>
+                </div>
             </div>
+
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <a nz-dropdown [nzDropdownMenu]="company">

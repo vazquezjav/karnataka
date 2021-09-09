@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class DataServiceService {
   ) { }
 
   // Get data of view : eeff_saldos_ebi_v
-  getDataBalance(){
-    return this.http.get(`${this.URL}/api/balancee`);
+  getDataBalance(year:number, month:string, company:string){
+    return this.http.get(`${this.URL}/api/balancee`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}`})});
   }
 
   // Get data of view : eeff_valor_indicador_v

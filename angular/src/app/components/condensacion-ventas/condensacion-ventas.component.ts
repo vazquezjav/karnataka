@@ -34,7 +34,7 @@ export class CondensacionVentasComponent implements OnInit {
   // method fill all lists
   fillLists() {
     this.listCompanies = ['El juri', 'UPS', 'Coral']
-    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre','Todos']
     this.listYears = [2018, 2019, 2020, 2021]
     this.listDistributions = ['distribucion ', 'distribucion 1 ']
     this.listClusters = ['Cluster', 'Todos']

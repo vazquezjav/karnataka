@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using KarnatakaApis.Connections;
+using KarnatakaApis.Negocio;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
@@ -14,43 +16,16 @@ namespace KarnatakaApis.Controllers
     [ApiController]
     public class BalanceEController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-
-        public BalanceEController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
 
         [HttpGet]
-        public JsonResult Get()
+        public JsonResult Get(int year, int month, string company)
         {
-            DataTable table = new DataTable();
-            NpgsqlDataReader reader;
-
-            using (NpgsqlConnection connection = new NpgsqlConnection(_configuration.GetConnectionString("KarnatakaAppCon")))
-            {
-                try
-                {
-                    connection.Open();
-                    using (NpgsqlCommand command = new NpgsqlCommand("select * from public.eeff_saldos_ebi_v limit 15", connection))
-                    {
-                        reader = command.ExecuteReader();
-                        table.Load(reader);
-
-                        reader.Close();
-                        connection.Close();
-                    }
-                }
-                catch (Exception)
-                {
-                    connection.Close();
-                }
-            }
-
-            return new JsonResult(table);
+            BalanceENegocio be = new BalanceENegocio();
+            return new JsonResult(be.consultData(year, month, company));
         }
+
     }
 
-   
+
 }
 
