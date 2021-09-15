@@ -49,5 +49,42 @@ namespace KarnatakaApis.Connections
             return table;
         }
 
+        public Tuple<NpgsqlCommand, NpgsqlConnection> connnection2(string query)
+        {
+            string connString = String.Format("Server={0}; User Id={1}; Database={2}; Port={3}; Password={4}",
+                    host, username, database, port, password);
+            NpgsqlConnection connection = new NpgsqlConnection(connString);
+            NpgsqlCommand command = new NpgsqlCommand();
+            try
+            {
+                connection.Open();
+                command = new NpgsqlCommand(query, connection);
+                
+            }
+            catch (Exception)
+            {
+                connection.Close();
+            }
+            return new Tuple<NpgsqlCommand, NpgsqlConnection>(command, connection);
+        }
+
+        public NpgsqlCommand connnection3(string query)
+        {
+            string connString = String.Format("Server={0}; User Id={1}; Database={2}; Port={3}; Password={4}",
+                    host, username, database, port, password);
+            NpgsqlConnection connection = new NpgsqlConnection(connString);
+            NpgsqlCommand command = new NpgsqlCommand();
+            try
+            {
+                connection.Open();
+                command = new NpgsqlCommand(query, connection);
+
+            }
+            catch (Exception)
+            {
+                connection.Close();
+            }
+            return command;
+        }
     }
 }

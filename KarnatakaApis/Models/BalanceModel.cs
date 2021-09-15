@@ -7,7 +7,7 @@ namespace KarnatakaApis.Models
 {
     public class BalanceModel
     {
-        private string sal_codigo { get; set; }
+        /*private string sal_codigo { get; set; }
         private string sal_nombre { get; set; }
         private int sal_movimiento { get; set; }
         private string sal_tipo_estado { get; set; }
@@ -35,7 +35,11 @@ namespace KarnatakaApis.Models
         private string sal_id_nivel3 { get; set; }
         private int sal_codigo_eeff { get; set; }
         private int sal_tipo { get; set; }
+        */
 
+        public List<double> last_year { get; set; }
+        public List<double> present_year { get; set; }
+        public List<double> presupuest { get; set; }
 
     }
 }

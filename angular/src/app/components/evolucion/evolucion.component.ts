@@ -47,6 +47,11 @@ export class EvolucionComponent implements OnInit {
   listYears: number[] = []
   listClusters: string[] = [];
 
+  // list values 
+
+
+  // Data of selects
+  slCompany: string [] = []
   constructor( 
     private notify: NzNotificationService,
     private dataService: DataServiceService,
@@ -64,10 +69,16 @@ export class EvolucionComponent implements OnInit {
     this.listCompanies = ['Indian Motos Inmot S.A.', 'Karnataka S.A.', 'Metrokia S.A.']
     this.listMonths = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre','Todos']
     this.listYears = [2018, 2019, 2020, 2021]
-    this.listClusters = ['Cluster', 'Todos']
+    this.listClusters = ['Vehiculos', 'Seguros']
+
+    this.dataService.getDataTags().subscribe(tags=>{
+      this.slCompany = tags
+      console.log('Companias ', this.slCompany)
+    })
   }
 
-  graphSales(last_year: number[], present_year: number[], pptoVNE: number[]) {
+  graphSales(last_year: any[], present_year: any[], pptoVNE: number[]) {
+    
     var options = {
       series: [{
         name: 'Ventas Anio Anterior',
@@ -112,7 +123,7 @@ export class EvolucionComponent implements OnInit {
         colors: ['transparent']
       },
       xaxis: {
-        categories: this.listMonths,
+        categories: this.listGetMonts(),
       },
       yaxis: {
         title: {
@@ -200,7 +211,7 @@ export class EvolucionComponent implements OnInit {
         colors: ['transparent']
       },
       xaxis: {
-        categories: this.listMonths,
+        categories: this.listGetMonts(),
       },
       yaxis: {
         title: {
@@ -403,18 +414,11 @@ export class EvolucionComponent implements OnInit {
 
     this.visible = true;
     const randomArray =[]
-    for(let i = 0; i<9; i++) {randomArray.push(Math.floor(Math.random() * 100) + 1)}
+    //for(let i = 0; i<9; i++) {randomArray.push(Math.floor(Math.random() * 100) + 1)}
     
-    const s_lastYear = []
-    const s_selectYear = []
-    const s_ppto = []
-    for(let i = 0; i<9; i++) {s_lastYear.push(Math.floor(Math.random() * 100) + 1)}
-    for(let i = 0; i<9; i++) {s_selectYear.push(Math.floor(Math.random() * 100) + 1)}
-    for(let i = 0; i<9; i++) {s_ppto.push(Math.floor(Math.random() * 100) + 1)}
 
-    this.graphSales(s_lastYear, s_selectYear, s_ppto)
-    this.graphSpend([44, 55, 57, 56, 61, 58, 63, 80, 100], [76, 85, 101, 98, 87, 105, 91, 114, 94], [35, 41, 36, 26, 45, 48, 52, 53, 41])
-
+    this.consumeService();
+    
     this.updateDataCard();
 
     this.graphMargin([44, 55, 57, 56, 61, 58, 63, 60, 66])
@@ -422,26 +426,33 @@ export class EvolucionComponent implements OnInit {
     this.graphOperation([44, 55, 57, 56, 61, 58, 63, 60, 66])
 
     this.createNotify();
-    this.consumeService();
+    
     
     this.first = false;
-
   }
 
   consumeService(){
     // validate data 
-
-    var months:any={"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12, "Todos":13}
     
-    this.dataService.getDataBalance(Number(this.lblYear), months[this.lblMonth], this.lblCompany).subscribe(data =>{
-      console.log(data," \n")
+    var months:any={"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12, "Todos":13}
+    this.dataService.getDBalance(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(data =>{
+      console.log("Servicoo ",data)
+      this.graphSales(data.last_year, data.present_year, data.presupuest);
     });
 
-    this.dataService.getDataIndicatorV().subscribe(data =>{
-      console.log(data)
+    this.dataService.getDOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(spendO =>{
+      
+      this.graphSpend(spendO.last_year, spendO.present_year, spendO.presupuest)
     })
   }
 
+  listGetMonts(){
+    if(this.lblMonth =="Todos"){
+      return this.listMonths;
+    }else{
+      return [this.lblMonth];
+    }
+  }
   updateDataCard() {
     this.loading = true;
     this.lblCLastYear = String(Number(this.lblYear) - 1);
@@ -464,7 +475,7 @@ export class EvolucionComponent implements OnInit {
   createNotify(){
     this.notify.blank(
       'Parametros seleccionados',
-      'Anio: '+ this.lblYear+'\n Mes: '+this.lblMonth+'\n Empresa: '+this.lblCompany
+      'Anio: '+ this.lblYear+'\n Mes: '+this.lblMonth+'\n Visualizar: '+this.radioValue
     ).onClick.subscribe(()=>{
     })
   }
