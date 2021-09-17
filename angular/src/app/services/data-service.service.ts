@@ -14,7 +14,7 @@ export class DataServiceService {
 
   // Get data of view : eeff_saldos_ebi_v
   getDBalance(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
-    return this.http.get(`${this.URL}/api/balance`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}`})});
+    return this.http.get(`${this.URL}/api/margino`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=VENTAS NETAS`})});
   }
 
   // Get data of view : eeff_valor_indicador_v
@@ -28,7 +28,17 @@ export class DataServiceService {
   }
 
   // get spend operation 
-  getDOperation(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
+  getSOperation(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
     return this.http.get(`${this.URL}/api/spendo`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}`})});
+  }
+
+  //get margin bruto
+  getMBruto(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
+    return this.http.get(`${this.URL}/api/margino`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=UTILIDAD BRUTA`})});
+  }
+
+  // get margin operation
+  getMOperation(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
+    return this.http.get(`${this.URL}/api/margino`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=UTILIDAD OPERACIONAL`})});
   }
 }

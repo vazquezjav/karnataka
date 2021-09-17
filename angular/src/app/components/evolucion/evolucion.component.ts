@@ -1,5 +1,7 @@
+import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ApexCharts from "apexcharts";
+
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { DataServiceService } from 'src/app/services/data-service.service';
 
@@ -107,11 +109,12 @@ export class EvolucionComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         formatter: function (val: any) {
           return "$" + val;
         },
         offsetY: -20,
+        
         style: {
           fontSize: '12px',
           colors: ["#304758"]
@@ -126,8 +129,15 @@ export class EvolucionComponent implements OnInit {
         categories: this.listGetMonts(),
       },
       yaxis: {
+        
         title: {
           text: '$ Dolares'
+        },
+        labels:{
+          show:true,
+          formatter: function (val: any) {
+            return Math.round(val)
+          }
         }
       },
       fill: {
@@ -140,7 +150,7 @@ export class EvolucionComponent implements OnInit {
       tooltip: {
         y: {
           formatter: function (val: any) {
-            return "$ " + val + " Dolares"
+            return ("$ " + val + " Dolares")
           }
         }
       },
@@ -195,7 +205,7 @@ export class EvolucionComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         formatter: function (val: any) {
           return "$" + val;
         },
@@ -216,6 +226,11 @@ export class EvolucionComponent implements OnInit {
       yaxis: {
         title: {
           text: '$ (Dolares)'
+        },
+        labels:{
+          formatter: function (val: any) {
+            return Math.round(val)
+          }
         }
       },
       fill: {
@@ -225,9 +240,9 @@ export class EvolucionComponent implements OnInit {
         show: true,
         position: 'top'
 
-      },
+      }, 
       tooltip: {
-        y: {
+        y: { 
           formatter: function (val: any) {
             return "$ " + val + " Dolares"
           }
@@ -256,11 +271,11 @@ export class EvolucionComponent implements OnInit {
     }
   }
 
-  graphMargin(last_year: number[]) {
+  graphMargin(year: number[]) {
     var options = {
       series: [{
         name: 'Gastos Anio Anterior',
-        data: last_year
+        data: year
       },
       ],
       chart: {
@@ -280,7 +295,7 @@ export class EvolucionComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         formatter: function (val: any) {
           return "$" + val;
         },
@@ -296,11 +311,16 @@ export class EvolucionComponent implements OnInit {
         colors: ['transparent']
       },
       xaxis: {
-        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        categories: this.listGetMonts(),
       },
       yaxis: {
         title: {
           text: '$ (Dolares)'
+        }, 
+        labels:{
+          formatter: function (val: any) {
+            return Math.round(val)
+          }
         }
       },
       fill: {
@@ -327,8 +347,8 @@ export class EvolucionComponent implements OnInit {
     } else {
       chart.render();
       chart.updateSeries([{
-        name: 'Nueva actualizacion',
-        data: [50, 10, 25, 10, 10, 100, 50, 41, 66]
+        name: 'Margen Bruto',
+        data: year
       }])
     }
   }
@@ -356,7 +376,7 @@ export class EvolucionComponent implements OnInit {
         },
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
         formatter: function (val: any) {
           return "$" + val;
         },
@@ -372,11 +392,16 @@ export class EvolucionComponent implements OnInit {
         colors: ['transparent']
       },
       xaxis: {
-        categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        categories: this.listGetMonts(),
       },
       yaxis: {
         title: {
           text: '$ (Dolares Operation)'
+        },
+        labels:{
+          formatter: function (val: any) {
+            return Math.round(val)
+          }
         }
       },
       fill: {
@@ -403,14 +428,13 @@ export class EvolucionComponent implements OnInit {
     } else {
       chart.render();
       chart.updateSeries([{
-        name: 'Actualizacion',
-        data: [50, 10, 25, 10, 10, 100, 50, 41, 66]
+        name: 'Margen Operacional',
+        data: year
       }])
     }
 
   }
   updateGraphs() {
-    //console.log(this.lblYear + " " + this.lblMonth + " " + this.lblCompany + " " + this.radioValue + " " + this.radioValueUnits)
 
     this.visible = true;
     const randomArray =[]
@@ -421,9 +445,7 @@ export class EvolucionComponent implements OnInit {
     
     this.updateDataCard();
 
-    this.graphMargin([44, 55, 57, 56, 61, 58, 63, 60, 66])
-
-    this.graphOperation([44, 55, 57, 56, 61, 58, 63, 60, 66])
+    
 
     this.createNotify();
     
@@ -432,20 +454,54 @@ export class EvolucionComponent implements OnInit {
   }
 
   consumeService(){
-    // validate data 
-    
     var months:any={"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12, "Todos":13}
+
     this.dataService.getDBalance(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(data =>{
-      console.log("Servicoo ",data)
-      this.graphSales(data.last_year, data.present_year, data.presupuest);
+      this.graphSales(this.roundedVectors(data.last_year), this.roundedVectors(data.present_year), this.roundedVectors(data.presupuest));
     });
 
-    this.dataService.getDOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(spendO =>{
-      
-      this.graphSpend(spendO.last_year, spendO.present_year, spendO.presupuest)
+    this.dataService.getSOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(spendO =>{
+      this.graphSpend(this.roundedVectors(spendO.last_year), this.roundedVectors(spendO.present_year), this.roundedVectors(spendO.presupuest));
+    })
+
+    this.dataService.getMBruto(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(marginB =>{
+      this.graphMargin(this.roundedVectors(marginB.present_year));
+
+      //update data card
+      if(this.lblMonth =="Todos"){
+        this.lblBSelect =this.sumValuesList(marginB.present_year).toFixed(2).toString(); 
+        this.lblBLast = this.sumValuesList(marginB.last_year).toFixed(2).toString();
+      }else{
+        this.lblBSelect = marginB.present_year.toFixed(2);
+        this.lblBLast = marginB.last_year.toFixed(2);
+      }
+    })
+
+    this.dataService.getMOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(marginO =>{
+      this.graphOperation(this.roundedVectors(marginO.present_year));
+      //update data card
+      if(this.lblMonth =="Todos"){
+        this.lblOSelect =this.sumValuesList(marginO.present_year).toFixed(2).toString(); 
+        this.lblOLast = this.sumValuesList(marginO.last_year).toFixed(2).toString();
+      }else{
+        this.lblOSelect = marginO.present_year.toFixed(2);
+        this.lblOLast = marginO.last_year.toFixed(2);
+      }
     })
   }
 
+  sumValuesList(year:any[]){
+    var sum =0;
+    var aux = 0;
+    for(var i in year){
+      if(aux ==year[i]){
+        break
+      }
+      sum +=year[i];
+      aux = year[i];
+    }
+    return sum;
+  }
   listGetMonts(){
     if(this.lblMonth =="Todos"){
       return this.listMonths;
@@ -459,8 +515,6 @@ export class EvolucionComponent implements OnInit {
     this.lblCSelectYear = this.lblYear;
 
     // margin bruto
-    this.lblBSelect = String(Math.floor(Math.random() * 1000) + 1) + " millones";
-    this.lblBLast = String(Math.floor(Math.random() * 1000) + 1) + " millones";
     this.lblBPorcentSelect = String(Math.floor(Math.random() * 100) + 1) + "%"
     this.lblBPorcentLast = String(Math.floor(Math.random() * 100) + 1) + "%"
 
@@ -496,5 +550,13 @@ export class EvolucionComponent implements OnInit {
 
   updateLabelCompany(data: string): void {
     this.lblCompany = data;
+  }
+
+  roundedVectors(year:any[]){
+    var values=[]
+    for(var i in year){
+      values.push(year[i].toFixed(2));
+    }
+    return values;
   }
 }

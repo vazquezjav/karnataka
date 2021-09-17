@@ -146,7 +146,7 @@ namespace KarnatakaApis.Negocio
             {
                 cumulative.Add(year[i] + aux);
                 aux = cumulative[i];
-                Console.WriteLine("acumulativa " + aux);
+                
             }
             return cumulative;
         }
