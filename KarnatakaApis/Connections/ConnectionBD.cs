@@ -10,7 +10,7 @@ namespace KarnatakaApis.Connections
 
     public class ConnectionBD
     {
-        private static string host = "192.168.43.69";
+        private static string host = "10.0.2.223";
         private static string port = "5432";
         private static string username = "corp_usr";
         private static string password = "corp2021";

@@ -18,32 +18,63 @@ namespace KarnatakaApis.Negocio
             List<double> present_year = new List<double>();
             BalanceModel balance = new BalanceModel();
             string query = "";
-            if (month == 13)
-            {
-                query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' group by sal_mes;",
-                                        year, company, typeGraph);
 
-            }
-            else
+            if(typeGraph =="GASTOS OPERACIONALES")
             {
-                if (typeVisualization == "Mes")
+                if (month == 13)
                 {
-                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes={3} group by sal_mes;",
-                                        year, company, typeGraph, month);
+                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' group by sal_mes;",
+                                            year, company);
                 }
                 else
                 {
-                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes between 1 and {3} group by sal_mes;",
-                                        year, company, typeGraph, month);
+                    if (month != 13 && typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' and sal_mes={2} group by sal_mes;",
+                                            year, company, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' and sal_mes between 1 and {2} group by sal_mes;",
+                                            year, company, month);
+                    }
+
                 }
             }
-            NpgsqlCommand command = _conDB.connnection3(query);
-            using (NpgsqlDataReader reader = command.ExecuteReader())
+            else
+            {
+                if (month == 13)
+                {
+                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' group by sal_mes;",
+                                            year, company, typeGraph);
+
+                }
+                else
+                {
+                    if (typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes={3} group by sal_mes;",
+                                            year, company, typeGraph, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes between 1 and {3} group by sal_mes;",
+                                            year, company, typeGraph, month);
+                    }
+                }
+            }
+
+
+            var tuple = _conDB.connnection2(query);
+
+            using (NpgsqlDataReader reader = tuple.Item1.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     present_year.Add(Convert.ToDouble(_so.changeUnits(typeUnits, Convert.ToDouble(reader["sum"]))));
                 }
+                tuple.Item2.Close();
+                
             }
 
             if (typeVisualization == "Acumulado" && month == 13)
@@ -76,38 +107,67 @@ namespace KarnatakaApis.Negocio
                     }
                 }
             }
+            
             return balance;
         }
         public List<double> consultLastYear(int year, int month, string company, string typeVisualization, string typeUnits, string typeGraph)
         {
             List<double> last_year = new List<double>();
             String query = "";
-            if (month == 13)
+            if(typeGraph =="GASTOS OPERACIONALES")
             {
-                query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' group by sal_mes;",
-                                        (year - 1), company, typeGraph);
-
-            }
-            else
-            {
-                if (typeVisualization == "Mes")
+                if (month == 13)
                 {
-                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes={3} group by sal_mes;",
-                                        (year - 1), company, typeGraph, month);
+                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' group by sal_mes;",
+                                            (year - 1), company);
                 }
                 else
                 {
-                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes between 1 and {3} group by sal_mes;",
-                                        (year - 1), company, typeGraph, month);
+                    if (month != 13 && typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' and sal_mes={2} group by sal_mes;",
+                                            (year - 1), company, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='GASTOS OPERACIONALES' and sal_mes between 1 and {2} group by sal_mes;",
+                                            (year - 1), company, month);
+                    }
+
                 }
             }
-            NpgsqlCommand command = _conDB.connnection3(query);
-            using (NpgsqlDataReader reader = command.ExecuteReader())
+            else
+            {
+                if (month == 13)
+                {
+                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' group by sal_mes;",
+                                            (year - 1), company, typeGraph);
+
+                }
+                else
+                {
+                    if (typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes={3} group by sal_mes;",
+                                            (year - 1), company, typeGraph, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=1 and sal_movimiento=1 and sal_periodo={0} and sal_codigo_emp={1} and sal_nivel3='{2}' and sal_mes between 1 and {3} group by sal_mes;",
+                                            (year - 1), company, typeGraph, month);
+                    }
+                }
+            }
+
+            //NpgsqlCommand command = _conDB.connnection3(query);
+            var tuple = _conDB.connnection2(query);
+            using (NpgsqlDataReader reader = tuple.Item1.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     last_year.Add(Convert.ToDouble(_so.changeUnits(typeUnits, Convert.ToDouble(reader["sum"]))));
                 }
+                tuple.Item2.Close();
             }
             return last_year;
         }
@@ -116,32 +176,70 @@ namespace KarnatakaApis.Negocio
         {
             List<double> presupuest = new List<double>();
             String query = "";
-            if (month == 13)
+
+            if(typeGraph =="GASTOS OPERACIONALES")
             {
-                query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}';",
-                                        year, company, typeGraph);
-            }
-            else
-            {
-                if (typeVisualization == "Mes")
+                if (month == 13)
                 {
-                    query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}' and sal_mes={3};",
-                                        year, company, typeGraph, month);
+                    query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel1 ='GASTOS OPERACIONALES' group by sal_mes;",
+                                            year, company);
                 }
                 else
                 {
-                    query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}' and sal_mes between 1 and {3};",
-                                        year, company, typeGraph, month);
+                    if (typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel1 ='GASTOS OPERACIONALES' and sal_mes={2};",
+                                            year, company, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sum(sal_valor_nac) from public.eeff_saldos_ebi_v where sal_tipo=2 and sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel1 ='GASTOS OPERACIONALES' and sal_mes between 1 and {2};",
+                                            year, company, month);
+                    }
+
                 }
-                
             }
-            NpgsqlCommand command = _conDB.connnection3(query);
-            using (NpgsqlDataReader reader = command.ExecuteReader())
+            else
+            {
+                if (month == 13)
+                {
+                    query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}';",
+                                            year, company, typeGraph);
+                }
+                else
+                {
+                    if (typeVisualization == "Mes")
+                    {
+                        query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and  sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}' and sal_mes={3};",
+                                            year, company, typeGraph, month);
+                    }
+                    else
+                    {
+                        query = String.Format("select sal_valor_nac from public.eeff_saldos_ebi_v where sal_tipo=2 and sal_periodo={0} and sal_codigo_emp ={1} and sal_movimiento=1 and sal_nivel3 ='{2}' and sal_mes between 1 and {3};",
+                                            year, company, typeGraph, month);
+                    }
+
+                }
+            }
+
+
+            //NpgsqlCommand command = _conDB.connnection3(query);
+            var tuple = _conDB.connnection2(query);
+            using (NpgsqlDataReader reader = tuple.Item1.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    presupuest.Add(Convert.ToDouble(_so.changeUnits(typeUnits, Convert.ToDouble(reader["sal_valor_nac"]))));
+                    if(typeGraph =="GASTOS OPERACIONALES")
+                    {
+                        presupuest.Add(Convert.ToDouble(_so.changeUnits(typeUnits, Convert.ToDouble(reader["sum"]))));
+                    }
+                    else
+                    {
+                        presupuest.Add(Convert.ToDouble(_so.changeUnits(typeUnits, Convert.ToDouble(reader["sal_valor_nac"]))));
+                    }
+                    
                 }
+                tuple.Item2.Close();
             }
 
             return presupuest;

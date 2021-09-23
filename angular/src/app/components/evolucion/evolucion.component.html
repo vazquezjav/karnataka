@@ -96,27 +96,27 @@
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <nz-radio-group [(ngModel)]="radioValue">
-                    <label nz-radio nzValue="Mes">Mes</label>
-                    <label nz-radio nzValue="Acumulado">Acumulado</label>
+                    <label nz-radio nzValue="Mes" (click)="updateGraphs()">Mes</label>
+                    <label nz-radio nzValue="Acumulado"(click)="updateGraphs()" >Acumulado</label>
                 </nz-radio-group>
             </div>
         </div>
         <div nz-col class="gutter-row" [nzSpan]="4">
             <div class="inner-box">
                 <nz-radio-group [(ngModel)]="radioValueUnits">
-                    <label nz-radio nzValue="Millones">Millones</label>
-                    <label nz-radio nzValue="Miles">Miles</label>
-                    <label nz-radio nzValue="Unidad">Unidad</label>
+                    <label nz-radio nzValue="Millones" (click)="updateGraphs()">Millones</label>
+                    <label nz-radio nzValue="Miles" (click)="updateGraphs()">Miles</label>
+                    <label nz-radio nzValue="Unidad"(click)="updateGraphs()">Unidad</label>
                 </nz-radio-group>
             </div>
         </div>
     </div>
 
     <br>
-    <div>
+    <!--<div>
         <button nz-button nzType="primary" (click)="updateGraphs()">Graficar</button>
-    </div>
-    <br>
+    </div>-->
+    
     <div [style.visibility]="(visible == false) ? 'hidden' : 'visible' ">
         <div id="chart_sales" >
         </div>

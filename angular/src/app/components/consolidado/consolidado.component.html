@@ -14,12 +14,6 @@
                 <div class="inner-box title_types">Mes</div>
             </div>
             <div nz-col class="gutter-row" [nzSpan]="4">
-                <div class="inner-box title_types">Cluster</div>
-            </div>
-            <div nz-col class="gutter-row" [nzSpan]="4">
-                <div class="inner-box title_types">Empresa</div>
-            </div>
-            <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box title_types">Visualizar:</div>
             </div>
             <div nz-col class="gutter-row" [nzSpan]="4">
@@ -58,59 +52,30 @@
     
                 </div>
             </div>
-            <div nz-col class="gutter-row" [nzSpan]="4">
-                <div class="inner-box">
-                    <a nz-dropdown [nzDropdownMenu]="cluster">
-                        {{lblCluster}}
-                        <i nz-icon nzType="down"></i>
-                    </a>
-                    <nz-dropdown-menu #cluster="nzDropdownMenu">
-                        <ul nz-menu>
-                            <li nz-menu-item *ngFor="let cluster of listClusters" (click)="updateLabelCluster(cluster)">
-                                {{cluster}}</li>
-                        </ul>
-                    </nz-dropdown-menu>
-                </div>
-            </div>
-
-            <div nz-col class="gutter-row" [nzSpan]="4">
-                <div class="inner-box">
-                    <a nz-dropdown [nzDropdownMenu]="company">
-                        {{lblCompany}}
-                        <i nz-icon nzType="down"></i>
-                    </a>
-                    <nz-dropdown-menu #company="nzDropdownMenu">
-                        <ul nz-menu>
-                            <li nz-menu-item *ngFor="let company of listCompanies" (click)="updateLabelCompany(company)">
-                                {{company}}</li>
-                        </ul>
-                    </nz-dropdown-menu>
-    
-                </div>
-            </div>
+            
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <nz-radio-group [(ngModel)]="radioValue">
-                        <label nz-radio nzValue="Mes">Mes</label>
-                        <label nz-radio nzValue="Acumulado">Acumulado</label>
+                        <label nz-radio nzValue="Mes"(click)="updateUnits('Mes')" >Mes</label>
+                        <label nz-radio nzValue="Acumulado" (click)="updateUnits('Acumulado')">Acumulado</label>
                     </nz-radio-group>
                 </div>
             </div>
             <div nz-col class="gutter-row" [nzSpan]="4">
                 <div class="inner-box">
                     <nz-radio-group [(ngModel)]="radioValueUnits">
-                        <label nz-radio nzValue="Millones">Millones</label>
-                        <label nz-radio nzValue="Miles">Miles</label>
-                        <label nz-radio nzValue="Unidad">Unidad</label>
+                        <label nz-radio nzValue="Millones" (click)="updateUnits('')" >Millones</label>
+                        <label nz-radio nzValue="Miles"(click)="updateUnits('')" >Miles</label>
+                        <label nz-radio nzValue="Unidad"(click)="updateUnits('')" >Unidad</label>
                     </nz-radio-group>
                 </div>
             </div>
         </div>
 
         <br>
-    <div>
+    <!--<div>
         <button nz-button nzType="primary" (click)="updateGraphs()">Graficar</button>
-    </div>
+    </div>-->
     <br>
     <div nz-row [nzGutter]="[16, 24]" [style.visibility]="(visible == false) ? 'hidden' : 'visible' ">
         <div nz-col class="gutter-row" [nzSpan]="8"><div class="inner-box">
@@ -161,7 +126,7 @@
                         <div class="inner-box title_types">{{lblBPorcentSelect}}</div>
                     </div>
                 </div>
-                <h1 class="float-right" [ngStyle]="valueMarginBruto >=0?{color:'green'}:{color:'red'}">{{valueMarginBruto +' %'}}</h1>
+                <h1 class="float-right" [ngStyle]="valueMarginBruto >=0?{color:'green'}:{color:'red'}">{{valueMarginBruto +'%'}}</h1>
                 <div id="chart_marginBruto"></div>
             </nz-card>
         </div></div>
@@ -189,7 +154,7 @@
                         <div class="inner-box title_types">{{lblSOPorcentSelect}}</div>
                     </div>
                 </div>
-                <h1 class="float-right" [ngStyle]="valueSpendOperation >=0?{color:'green'}:{color:'red'}">{{valueSpendOperation +' %'}}</h1>
+                <h1 class="float-right" [ngStyle]="valueSpendOperation >=0?{color:'green'}:{color:'red'}">{{valueSpendOperation +'%'}}</h1>
                 <div id="chart_spendOperation"></div>
             </nz-card>
         </div></div>
@@ -217,7 +182,7 @@
                         <div class="inner-box title_types">{{lblMOPorcentSelect}}</div>
                     </div>
                 </div>
-                <h1 class="float-right" [ngStyle]="valueMarginOperation >=0?{color:'green'}:{color:'red'}">{{valueMarginOperation +' %'}}</h1>
+                <h1 class="float-right" [ngStyle]="valueMarginOperation >=0?{color:'green'}:{color:'red'}">{{valueMarginOperation +'%'}}</h1>
                 <div id="chart_marginOperation"></div>
             </nz-card>
         </div></div>
@@ -245,7 +210,7 @@
                         <div class="inner-box title_types">{{lblNOPorcentSelect}}</div>
                     </div>
                 </div>
-                <h1 class="float-right" [ngStyle]="valueSpendNOperation >=0?{color:'green'}:{color:'red'}">{{valueSpendNOperation +' %'}}</h1>
+                <h1 class="float-right" [ngStyle]="valueSpendNOperation >=0?{color:'green'}:{color:'red'}">{{valueSpendNOperation +'%'}}</h1>
                 <div id="chart_spendNOperation"></div>
             </nz-card>
         </div></div>
@@ -274,7 +239,7 @@
                             <div class="inner-box title_types">{{lblMNPorcentSelect}}</div>
                         </div>
                     </div>
-                    <h1 class="float-right" [ngStyle]="valueMarginNeto >=0?{color:'green'}:{color:'red'}">{{valueMarginNeto +' %'}}</h1>
+                    <h1 class="float-right" [ngStyle]="valueMarginNeto >=0?{color:'green'}:{color:'red'}">{{valueMarginNeto +'%'}}</h1>
                     <div id="chart_marginNeto"></div>
                 </nz-card>
             </div></div>

@@ -49,8 +49,17 @@ export class EvolucionComponent implements OnInit {
   listYears: number[] = []
   listClusters: string[] = [];
 
-  // list values 
+  // values porcents Margin Bruto
+  valSales:any
+  valMargin:any
+  valSalesLast:any 
+  valMarginLast:any
 
+  //values porcents Margin Operation
+  valSpend:any
+  valOperation:any
+  valSpendLast:any
+  valOperationLast:any
 
   // Data of selects
   slCompany: string [] = []
@@ -73,10 +82,13 @@ export class EvolucionComponent implements OnInit {
     this.listYears = [2018, 2019, 2020, 2021]
     this.listClusters = ['Vehiculos', 'Seguros']
 
-    this.dataService.getDataTags().subscribe(tags=>{
-      this.slCompany = tags
-      console.log('Companias ', this.slCompany)
-    })
+    var date = new Date();
+    this.lblYear=String(date.getFullYear());
+    var months: any = { "Enero": 1, "Febrero": 2, "Marzo": 3, "Abril": 4, "Mayo": 5, "Junio": 6, "Julio": 7, "Agosto": 8, "Septiembre": 9, "Octubre": 10, "Noviembre": 11, "Diciembre": 12, "Todos": 13 }
+
+    this.lblMonth=String(Object.keys(months).find(key => months[key] === date.getUTCMonth() + 1));
+
+    this.updateGraphs();
   }
 
   graphSales(last_year: any[], present_year: any[], pptoVNE: number[]) {
@@ -442,10 +454,6 @@ export class EvolucionComponent implements OnInit {
     
 
     this.consumeService();
-    
-    this.updateDataCard();
-
-    
 
     this.createNotify();
     
@@ -453,44 +461,70 @@ export class EvolucionComponent implements OnInit {
     this.first = false;
   }
 
-  consumeService(){
+  async consumeService(){
+    this.loading = true;
+    this.lblCLastYear = String(Number(this.lblYear) - 1);
+    this.lblCSelectYear = this.lblYear;
+
     var months:any={"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12, "Todos":13}
 
-    this.dataService.getDBalance(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(data =>{
+    await this.dataService.getDBalance(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(data =>{
       this.graphSales(this.roundedVectors(data.last_year), this.roundedVectors(data.present_year), this.roundedVectors(data.presupuest));
+      this.valSales = data.present_year;
+      this.valSalesLast = data.last_year;
     });
 
-    this.dataService.getSOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(spendO =>{
+    await this.dataService.getSOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(spendO =>{
       this.graphSpend(this.roundedVectors(spendO.last_year), this.roundedVectors(spendO.present_year), this.roundedVectors(spendO.presupuest));
+      this.valSpend = spendO.present_year;
+      this.valSpendLast = spendO.last_year
     })
 
-    this.dataService.getMBruto(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(marginB =>{
+    await this.dataService.getMBruto(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(marginB =>{
       this.graphMargin(this.roundedVectors(marginB.present_year));
-
+      this.valMargin = marginB.present_year;
+      this.valMarginLast = marginB.last_year;
+      
+      console.log("margen bruto "+this.valMargin+" | "+this.valSales);
+      
       //update data card
       if(this.lblMonth =="Todos"){
         this.lblBSelect =this.sumValuesList(marginB.present_year).toFixed(2).toString(); 
         this.lblBLast = this.sumValuesList(marginB.last_year).toFixed(2).toString();
+        this.lblBPorcentSelect = ((this.sumValuesList(this.valMargin)/this.sumValuesList(this.valSales))*100).toFixed(2)+"%"
+        this.lblBPorcentLast = ((this.sumValuesList(this.valMarginLast)/this.sumValuesList(this.valSalesLast))*100).toFixed(2)+"%"
       }else{
-        this.lblBSelect = marginB.present_year.toFixed(2);
-        this.lblBLast = marginB.last_year.toFixed(2);
+        
+        this.lblBSelect = marginB.present_year[0].toFixed(2);
+        this.lblBLast = marginB.last_year[0].toFixed(2);
+        this.lblBPorcentSelect = String(((this.valMargin/this.valSales)*100).toFixed(2))+"%";
+        this.lblBPorcentLast = String(((this.valMarginLast/this.valSalesLast)*100).toFixed(2))+"%";
       }
     })
 
     this.dataService.getMOperation(Number(this.lblYear), months[this.lblMonth], String(3), this.radioValue, this.radioValueUnits).subscribe(marginO =>{
       this.graphOperation(this.roundedVectors(marginO.present_year));
+      
+      this.valOperation = marginO.present_year;
+      this.valOperationLast = marginO.last_year;
+
+      //console.log("Operation "+this.valOperation+" | "+this.valSales[0]);
       //update data card
       if(this.lblMonth =="Todos"){
         this.lblOSelect =this.sumValuesList(marginO.present_year).toFixed(2).toString(); 
         this.lblOLast = this.sumValuesList(marginO.last_year).toFixed(2).toString();
+        this.lblOPorcentSelect = ((this.sumValuesList(this.valOperation)/this.sumValuesList(this.valSales))*100).toFixed(2)+"%"
+        this.lblOPorcentLast = ((this.sumValuesList(this.valOperationLast)/this.sumValuesList(this.valSalesLast))*100).toFixed(2)+"%"
       }else{
-        this.lblOSelect = marginO.present_year.toFixed(2);
-        this.lblOLast = marginO.last_year.toFixed(2);
+        this.lblOSelect = marginO.present_year[0].toFixed(2);
+        this.lblOLast = marginO.last_year[0].toFixed(2);
+        this.lblOPorcentSelect = String(((this.valOperation/this.valSales[0])*100).toFixed(2))+"%";
+        this.lblOPorcentLast = String(((this.valOperationLast/this.valSalesLast)*100).toFixed(2))+"%";
       }
     })
   }
 
-  sumValuesList(year:any[]){
+  sumValuesList(year:any){
     var sum =0;
     var aux = 0;
     for(var i in year){
@@ -510,9 +544,7 @@ export class EvolucionComponent implements OnInit {
     }
   }
   updateDataCard() {
-    this.loading = true;
-    this.lblCLastYear = String(Number(this.lblYear) - 1);
-    this.lblCSelectYear = this.lblYear;
+    
 
     // margin bruto
     this.lblBPorcentSelect = String(Math.floor(Math.random() * 100) + 1) + "%"
@@ -536,21 +568,16 @@ export class EvolucionComponent implements OnInit {
 
   // methods update Labels with choice parameters of dropdown 
   updateLabelYear(data: number): void {
-    console.log("Anio " + data)
     this.lblYear = data.toString();
+    this.updateGraphs();
   }
 
   updateLabelMonth(data: string): void {
     this.lblMonth = data;
+    this.updateGraphs();
   }
 
-  updateLabelCluster(data: string): void {
-    this.lblCluster = data;
-  }
 
-  updateLabelCompany(data: string): void {
-    this.lblCompany = data;
-  }
 
   roundedVectors(year:any[]){
     var values=[]

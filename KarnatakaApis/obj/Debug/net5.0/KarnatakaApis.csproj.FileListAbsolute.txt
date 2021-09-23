@@ -16,7 +16,6 @@ C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\bin\Debug\net5.0\Npgsql.dll
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.csproj.AssemblyReference.cache
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.AssemblyInfoInputs.cache
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.AssemblyInfo.cs
@@ -32,3 +31,4 @@ C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaAp
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\ref\KarnatakaApis.dll
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.pdb
 C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.genruntimeconfig.cache
+C:\Users\vazqu\Desktop\10mo\Karnataka\KarnatakaApis\obj\Debug\net5.0\KarnatakaApis.csproj.AssemblyReference.cache

@@ -29,7 +29,7 @@ export class DataServiceService {
 
   // get spend operation 
   getSOperation(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
-    return this.http.get(`${this.URL}/api/spendo`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}`})});
+    return this.http.get(`${this.URL}/api/margino`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=GASTOS OPERACIONALES`})});
   }
 
   //get margin bruto
@@ -40,5 +40,11 @@ export class DataServiceService {
   // get margin operation
   getMOperation(year:number, month:string, company:string, typeVisualization: string, typeUnits: string): Observable<any>{
     return this.http.get(`${this.URL}/api/margino`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=UTILIDAD OPERACIONAL`})});
+  }
+
+
+  // *****  Services page Consolidated ******
+  getConsolidated(year:number, month:string, company:string, typeVisualization: string, typeUnits: string, typeGraph:string): Observable<any>{
+    return this.http.get(`${this.URL}/api/consolidated`, {params: new HttpParams({fromString:`year=${year}&month=${month}&company=${company}&typeVisualization=${typeVisualization}&typeUnits=${typeUnits}&typeGraph=${typeGraph}`})});
   }
 }
